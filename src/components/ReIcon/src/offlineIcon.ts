@@ -8,7 +8,15 @@ import { addIcon } from "@iconify/vue/dist/offline";
 import HomeFilled from "@iconify-icons/ep/home-filled";
 import InformationLine from "@iconify-icons/ri/information-line";
 import Lollipop from "@iconify-icons/ep/lollipop";
+import Monitor from "@iconify-icons/ep/monitor";
+import Histogram from "@iconify-icons/ep/histogram";
+import Collection from "@iconify-icons/ep/collection";
+import Folder from "@iconify-icons/ep/folder";
 
 addIcon("homeFilled", HomeFilled);
 addIcon("informationLine", InformationLine);
 addIcon("lollipop", Lollipop);
+addIcon("monitor", Monitor);
+addIcon("histogram", Histogram);
+addIcon("collection", Collection);
+addIcon("folder", Folder);
