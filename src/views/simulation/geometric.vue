@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
-import type { FormInstance, FormRules } from "element-plus";
+import type { FormInstance } from "element-plus";
+import { geoRules } from "./utils/rule";
 import bqtImage from "@/assets/img/BQT.png";
 import yztImage from "@/assets/img/YZT.png";
 import zhtImage from "@/assets/img/ZHT.png";
@@ -26,7 +27,7 @@ interface RuleForm {
 
 const ruleFormRef = ref<FormInstance>();
 const ruleForm = reactive<RuleForm>({
-  shape: "",
+  shape: "YZT",
   pbxheight: undefined,
   pbxdia: undefined,
   mutaoheight: undefined,
@@ -42,69 +43,6 @@ const ruleForm = reactive<RuleForm>({
   pbxheight2: undefined,
   mutaoheight1: undefined,
   mutaoheight2: undefined
-});
-
-const rules = reactive<FormRules<RuleForm>>({
-  pbxheight: [
-    { required: true, message: "请输入药粉高度", trigger: "blur" },
-    { type: "number", message: "请输入数字" }
-  ],
-  pbxdia: [
-    { required: true, message: "请输入药粉半径", trigger: "blur" },
-    { type: "number", message: "请输入数字" }
-  ],
-  mutaoheight: [
-    { required: true, message: "请输入模套高度", trigger: "blur" },
-    { type: "number", message: "请输入数字" }
-  ],
-  mndia: [
-    { required: true, message: "请输入模套内径", trigger: "blur" },
-    { type: "number", message: "请输入数字" }
-  ],
-  mwdia: [
-    { required: true, message: "请输入模套外径", trigger: "blur" },
-    { type: "number", message: "请输入数字" }
-  ],
-  upheigh: [
-    { required: true, message: "请输入冲头高度", trigger: "blur" },
-    { type: "number", message: "请输入数字" }
-  ],
-  updia: [
-    { required: true, message: "请输入冲头半径", trigger: "blur" },
-    { type: "number", message: "请输入数字" }
-  ],
-  downheight: [
-    { required: true, message: "请输入底座高度", trigger: "blur" },
-    { type: "number", message: "请输入数字" }
-  ],
-  downdia: [
-    { required: true, message: "请输入底座半径", trigger: "blur" },
-    { type: "number", message: "请输入数字" }
-  ],
-  pbxupdia: [
-    { required: true, message: "请输入锥合体顶半径", trigger: "blur" },
-    { type: "number", message: "请输入数字" }
-  ],
-  pbxdowndia: [
-    { required: true, message: "请输入锥合体底半径", trigger: "blur" },
-    { type: "number", message: "请输入数字" }
-  ],
-  pbxheight1: [
-    { required: true, message: "请输入锥合体高度1", trigger: "blur" },
-    { type: "number", message: "请输入数字" }
-  ],
-  pbxheight2: [
-    { required: true, message: "请输入锥合体高度2", trigger: "blur" },
-    { type: "number", message: "请输入数字" }
-  ],
-  mutaoheight1: [
-    { required: true, message: "请输入模套高度1", trigger: "blur" },
-    { type: "number", message: "请输入数字" }
-  ],
-  mutaoheight2: [
-    { required: true, message: "请输入模套高度2", trigger: "blur" },
-    { type: "number", message: "请输入数字" }
-  ]
 });
 
 const submitForm = async (formEl: FormInstance | undefined) => {
@@ -129,7 +67,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
     <el-form
       ref="ruleFormRef"
       :model="ruleForm"
-      :rules="rules"
+      :rules="geoRules"
       label-width="120px"
       class="demo-ruleForm"
       size="large"
@@ -143,220 +81,237 @@ const resetForm = (formEl: FormInstance | undefined) => {
         </el-radio-group>
       </el-form-item>
       <template v-if="ruleForm.shape === 'YZT'">
-        <el-form-item label="药粉相关参数" prop="powder">
-          <div class="grid grid-cols-2 gap-4">
-            <el-input
-              v-model="ruleForm.pbxheight"
-              placeholder="高度"
-              size="large"
-            />
-            <el-input
-              v-model="ruleForm.pbxdia"
-              placeholder="半径"
-              size="large"
-            />
-          </div>
+        <div class="title">药粉相关参数</div>
+        <el-form-item label="高度(mm)" prop="pbxheight">
+          <el-input
+            v-model="ruleForm.pbxheight"
+            size="large"
+            placeholder="请输入大于20，如比模套小则输入10以上"
+          />
         </el-form-item>
-        <el-form-item label="模套相关参数" prop="mold">
-          <div class="grid grid-cols-1 gap-4">
-            <el-input
-              v-model="ruleForm.mutaoheight"
-              placeholder="高度"
-              size="large"
-            />
-            <el-input
-              v-model="ruleForm.mndia"
-              placeholder="内径"
-              size="large"
-            />
-            <el-input
-              v-model="ruleForm.mwdia"
-              placeholder="外径"
-              size="large"
-            />
-          </div>
+        <el-form-item label="半径(mm)" prop="pbxdia">
+          <el-input
+            v-model="ruleForm.pbxdia"
+            size="large"
+            placeholder="请输入10-15，如比外径小5以上，四个内径一致"
+          />
         </el-form-item>
-        <el-form-item label="冲头相关参数" prop="punch">
-          <div class="grid grid-cols-2 gap-4">
-            <el-input
-              v-model="ruleForm.upheigh"
-              placeholder="高度"
-              size="large"
-            />
-            <el-input
-              v-model="ruleForm.updia"
-              placeholder="半径"
-              size="large"
-            />
-          </div>
+        <div class="title">模套相关参数</div>
+        <el-form-item label="高度(mm)" prop="mutaoheight">
+          <el-input
+            v-model="ruleForm.mutaoheight"
+            size="large"
+            placeholder="请输入30-50"
+          />
         </el-form-item>
-        <el-form-item label="底座相关参数" prop="base">
-          <div class="grid grid-cols-2 gap-4">
-            <el-input
-              v-model="ruleForm.downheight"
-              placeholder="高度"
-              size="large"
-            />
-            <el-input
-              v-model="ruleForm.downdia"
-              placeholder="半径"
-              size="large"
-            />
-          </div>
+        <el-form-item label="内径(mm)" prop="mndia">
+          <el-input
+            v-model="ruleForm.mndia"
+            size="large"
+            placeholder="请输入10-15，如比外径小5以上，四个内径一致"
+          />
+        </el-form-item>
+        <el-form-item label="外径(mm)" prop="mwdia">
+          <el-input
+            v-model="ruleForm.mwdia"
+            size="large"
+            placeholder="请输入15-20"
+          />
+        </el-form-item>
+        <div class="title">冲头相关参数</div>
+        <el-form-item label="高度(mm)" prop="upheigh">
+          <el-input
+            v-model="ruleForm.upheigh"
+            size="large"
+            placeholder="请输入8-10"
+          />
+        </el-form-item>
+        <el-form-item label="半径(mm)" prop="updia">
+          <el-input
+            v-model="ruleForm.updia"
+            size="large"
+            placeholder="请输入10-15，如比外径小5以上，四个内径一致"
+          />
+        </el-form-item>
+        <div class="title">底座相关参数</div>
+        <el-form-item label="高度(mm)" prop="downheight">
+          <el-input
+            v-model="ruleForm.downheight"
+            size="large"
+            placeholder="请输入5-8"
+          />
+        </el-form-item>
+        <el-form-item label="半径(mm)" prop="downdia">
+          <el-input
+            v-model="ruleForm.downdia"
+            size="large"
+            placeholder="请输入10-15，如比外径小5以上，四个内径一致"
+          />
         </el-form-item>
       </template>
       <template v-if="ruleForm.shape === 'BQT'">
-        <el-form-item label="药粉相关参数" prop="powder">
-          <div class="grid grid-cols-2 gap-4">
-            <el-input
-              v-model="ruleForm.pbxheight"
-              placeholder="高度"
-              size="large"
-            />
-            <el-input
-              v-model="ruleForm.pbxdia"
-              placeholder="半径"
-              size="large"
-            />
-          </div>
+        <div class="title">药粉相关参数</div>
+        <el-form-item label="高度(mm)" prop="pbxheight">
+          <el-input
+            v-model="ruleForm.pbxheight"
+            size="large"
+            placeholder="请输入10-15"
+          />
         </el-form-item>
-        <el-form-item label="模套相关参数" prop="mold">
-          <div class="grid grid-cols-2 gap-4">
-            <el-input
-              v-model="ruleForm.mutaoheight1"
-              placeholder="高度1"
-              size="large"
-            />
-            <el-input
-              v-model="ruleForm.mutaoheight2"
-              placeholder="高度2"
-              size="large"
-            />
-            <el-input
-              v-model="ruleForm.mndia"
-              placeholder="内径"
-              size="large"
-            />
-            <el-input
-              v-model="ruleForm.mwdia"
-              placeholder="外径"
-              size="large"
-            />
-          </div>
+        <el-form-item label="半径(mm)" prop="pbxdia">
+          <el-input
+            v-model="ruleForm.pbxdia"
+            size="large"
+            placeholder="请输入10-15，如比外径小5以上，三个内径一致"
+          />
         </el-form-item>
-        <el-form-item label="冲头相关参数" prop="punch">
-          <div class="grid grid-cols-2 gap-4">
-            <el-input
-              v-model="ruleForm.upheigh"
-              placeholder="高度"
-              size="large"
-            />
-            <el-input
-              v-model="ruleForm.updia"
-              placeholder="半径"
-              size="large"
-            />
-          </div>
+        <div class="title">模套相关参数</div>
+        <el-form-item label="高度一(mm)" prop="mutaoheight1">
+          <el-input
+            v-model="ruleForm.mutaoheight1"
+            size="large"
+            placeholder="请输入39-45"
+          />
         </el-form-item>
-        <el-form-item label="底座相关参数" prop="base">
-          <div class="grid grid-cols-2 gap-4">
-            <el-input
-              v-model="ruleForm.downheight"
-              placeholder="高度"
-              size="large"
-            />
-            <el-input
-              v-model="ruleForm.downdia"
-              placeholder="半径"
-              size="large"
-            />
-          </div>
+        <el-form-item label="高度二(mm)" prop="mutaoheight2">
+          <el-input
+            v-model="ruleForm.mutaoheight2"
+            size="large"
+            placeholder="请输入高度一的值减5"
+          />
+        </el-form-item>
+        <el-form-item label="内径(mm)" prop="mndia">
+          <el-input
+            v-model="ruleForm.mndia"
+            size="large"
+            placeholder="请输入10-15，如比外径小5以上，三个内径一致"
+          />
+        </el-form-item>
+        <el-form-item label="外径(mm)" prop="mwdia">
+          <el-input
+            v-model="ruleForm.mwdia"
+            size="large"
+            placeholder="请输入15-20"
+          />
+        </el-form-item>
+        <el-form-item label="底座厚度(mm)" prop="downheight">
+          <el-input
+            v-model="ruleForm.downheight"
+            size="large"
+            placeholder="请输入5-8"
+          />
+        </el-form-item>
+        <div class="title">冲头相关参数</div>
+        <el-form-item label="高度(mm)" prop="upheigh">
+          <el-input
+            v-model="ruleForm.upheigh"
+            size="large"
+            placeholder="请输入15-20"
+          />
+        </el-form-item>
+        <el-form-item label="半径(mm)" prop="updia">
+          <el-input
+            v-model="ruleForm.updia"
+            size="large"
+            placeholder="请输入10-15，如比外径小5以上，三个内径一致"
+          />
         </el-form-item>
       </template>
       <template v-if="ruleForm.shape === 'ZHT'">
-        <el-form-item label="药粉相关参数" prop="powder">
-          <div class="grid grid-cols-4 gap-4">
-            <el-input
-              v-model="ruleForm.pbxupdia"
-              placeholder="顶半径"
-              size="large"
-            />
-            <el-input
-              v-model="ruleForm.pbxdowndia"
-              placeholder="底半径"
-              size="large"
-            />
-            <el-input
-              v-model="ruleForm.pbxheight1"
-              placeholder="高度1"
-              size="large"
-            />
-            <el-input
-              v-model="ruleForm.pbxheight2"
-              placeholder="高度2"
-              size="large"
-            />
-          </div>
+        <div class="title">药粉相关参数</div>
+        <el-form-item label="高度一(mm)" prop="pbxheight1">
+          <el-input
+            v-model="ruleForm.pbxheight1"
+            size="large"
+            placeholder="请输入27-35"
+          />
         </el-form-item>
-        <el-form-item label="模套相关参数" prop="mold">
-          <div class="grid grid-cols-2 gap-4">
-            <el-input
-              v-model="ruleForm.mutaoheight1"
-              placeholder="高度1"
-              size="large"
-            />
-            <el-input
-              v-model="ruleForm.mutaoheight2"
-              placeholder="高度2"
-              size="large"
-            />
-            <el-input
-              v-model="ruleForm.mndia"
-              placeholder="内径"
-              size="large"
-            />
-            <el-input
-              v-model="ruleForm.mwdia"
-              placeholder="外径"
-              size="large"
-            />
-          </div>
+        <el-form-item label="高度二(mm)" prop="pbxheight2">
+          <el-input
+            v-model="ruleForm.pbxheight2"
+            size="large"
+            placeholder="请输入高度一的值减17"
+          />
         </el-form-item>
-        <el-form-item label="冲头相关参数" prop="punch">
-          <div class="grid grid-cols-2 gap-4">
-            <el-input
-              v-model="ruleForm.upheigh"
-              placeholder="高度"
-              size="large"
-            />
-            <el-input
-              v-model="ruleForm.updia"
-              placeholder="半径"
-              size="large"
-            />
-          </div>
+        <el-form-item label="顶半径(mm)" prop="pbxupdia">
+          <el-input
+            v-model="ruleForm.pbxupdia"
+            size="large"
+            placeholder="请输入10-15，如比外径小5以上，三个内径一致"
+          />
         </el-form-item>
-        <el-form-item label="底座相关参数" prop="base">
-          <div class="grid grid-cols-2 gap-4">
-            <el-input
-              v-model="ruleForm.downheight"
-              placeholder="高度"
-              size="large"
-            />
-            <el-input
-              v-model="ruleForm.downdia"
-              placeholder="半径"
-              size="large"
-            />
-          </div>
+        <el-form-item label="底半径(mm)" prop="pbxdowndia">
+          <el-input
+            v-model="ruleForm.pbxdowndia"
+            size="large"
+            placeholder="请输6.5-8.5和模套底半径保持一致"
+          />
+        </el-form-item>
+        <div class="title">模套相关参数</div>
+        <el-form-item label="高度一(mm)" prop="mutaoheight1">
+          <el-input
+            v-model="ruleForm.mutaoheight1"
+            size="large"
+            placeholder="请输入46-55"
+          />
+        </el-form-item>
+        <el-form-item label="高度二(mm)" prop="mutaoheight2">
+          <el-input
+            v-model="ruleForm.mutaoheight2"
+            size="large"
+            placeholder="请输入高度一的值减12"
+          />
+        </el-form-item>
+        <el-form-item label="内径(mm)" prop="mndia">
+          <el-input
+            v-model="ruleForm.mndia"
+            size="large"
+            placeholder="请输入10-15，如比外径小5以上，三个内径一致"
+          />
+        </el-form-item>
+        <el-form-item label="外径(mm)" prop="mwdia">
+          <el-input
+            v-model="ruleForm.mwdia"
+            size="large"
+            placeholder="请输入15-20"
+          />
+        </el-form-item>
+        <el-form-item label="底座厚度(mm)" prop="downheight">
+          <el-input
+            v-model="ruleForm.downheight"
+            size="large"
+            placeholder="请输入5-8"
+          />
+        </el-form-item>
+        <el-form-item label="底半径(mm)" prop="downdia">
+          <el-input
+            v-model="ruleForm.downdia"
+            size="large"
+            placeholder="请输入6.5-8.5和模套底半径保持一致"
+          />
+        </el-form-item>
+        <div class="title">冲头相关参数</div>
+        <el-form-item label="高度(mm)" prop="upheigh">
+          <el-input
+            v-model="ruleForm.upheigh"
+            size="large"
+            placeholder="请输入15-18"
+          />
+        </el-form-item>
+        <el-form-item label="半径(mm)" prop="updia">
+          <el-input
+            v-model="ruleForm.updia"
+            size="large"
+            placeholder="请输入10-15，如比外径小5以上，三个内径一致"
+          />
         </el-form-item>
       </template>
       <div class="button-container">
         <el-form-item label-width="0">
           <el-button type="primary" @click="submitForm(ruleFormRef)">
-            Create
+            保存
           </el-button>
-          <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
+          <el-button @click="resetForm(ruleFormRef)">重置</el-button>
         </el-form-item>
       </div>
     </el-form>
@@ -384,9 +339,15 @@ const resetForm = (formEl: FormInstance | undefined) => {
   width: 400px;
 }
 
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
 .container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 .button-container {
   display: flex;
@@ -397,6 +358,6 @@ const resetForm = (formEl: FormInstance | undefined) => {
   display: flex;
   justify-content: flex-end;
   margin-left: 20px;
-  min-width: 2feat00px;
+  min-width: 200px;
 }
 </style>
