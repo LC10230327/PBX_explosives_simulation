@@ -1,0 +1,206 @@
+{
+  "code": 200,
+  "message": "成功",
+  "data": {
+    "total": 18,
+    "size": 10,
+    "current": 1,
+    "orders": [],
+    "optimizeCountSql": true,
+    "hitCount": false,
+    "countId": null,
+    "maxLimit": null,
+    "searchCount": true,
+    "pages": 2,
+    "tableOptions": {
+      "showIndex": true
+    },
+    "columns": [
+      {
+        "label": "时间",
+        "prop": "Time"
+      },
+      {
+        "label": "PBX高度（mm）",
+        "prop": "pbxheight"
+      },
+      {
+        "label": "PBX半径（mm）",
+        "prop": "pbxradius"
+      },
+      {
+        "label": "模套高度（mm）",
+        "prop": "motaoheight"
+      },
+      {
+        "label": "模套内径（mm）",
+        "prop": "motaoinradius"
+      },
+      {
+        "label": "模套外径（mm）",
+        "prop": "motaooutradius"
+      },
+      {
+        "label": "冲头高度（mm）",
+        "prop": "chongtouheight"
+      },
+      {
+        "label": "冲头半径（mm）",
+        "prop": "chongtouradius"
+      },
+      {
+        "label": "生成工艺报表",
+        "prop": "baobiao",
+        "scopedSlots": "baobiao"
+      }
+    ],
+    "tableData": {
+      "totalCount": 14,
+      "pageSize": 15,
+      "pageNo": 1,
+      "list": [
+        {
+          "Time": "2021-01-09",
+          "pbxheight": "22.3",
+          "pbxradius": "10",
+          "motaoheight": "30.3",
+          "motaoinradius": "10",
+          "motaooutradius": "15",
+          "chongtouheight": "8",
+          "chongtouradius": "10"
+        },
+        {
+          "Time": "2020-01-09",
+          "pbxheight": "22.3",
+          "pbxradius": "10",
+          "motaoheight": "30.3",
+          "motaoinradius": "10",
+          "motaooutradius": "15",
+          "chongtouheight": "8",
+          "chongtouradius": "10"
+        },
+        {
+          "Time": "2020-01-09",
+          "pbxheight": "22.3",
+          "pbxradius": "10",
+          "motaoheight": "30.3",
+          "motaoinradius": "10",
+          "motaooutradius": "15",
+          "chongtouheight": "8",
+          "chongtouradius": "10"
+        },
+        {
+          "Time": "2020-01-09",
+          "pbxheight": "22.3",
+          "pbxradius": "10",
+          "motaoheight": "30.3",
+          "motaoinradius": "10",
+          "motaooutradius": "15",
+          "chongtouheight": "8",
+          "chongtouradius": "10"
+        },
+        {
+          "Time": "2020-01-09",
+          "pbxheight": "22.3",
+          "pbxradius": "10",
+          "motaoheight": "30.3",
+          "motaoinradius": "10",
+          "motaooutradius": "15",
+          "chongtouheight": "8",
+          "chongtouradius": "10"
+        },
+        {
+          "Time": "2020-01-09",
+          "pbxheight": "22.3",
+          "pbxradius": "10",
+          "motaoheight": "30.3",
+          "motaoinradius": "10",
+          "motaooutradius": "15",
+          "chongtouheight": "8",
+          "chongtouradius": "10"
+        },
+        {
+          "Time": "2020-01-09",
+          "pbxheight": "22.3",
+          "pbxradius": "10",
+          "motaoheight": "30.3",
+          "motaoinradius": "10",
+          "motaooutradius": "15",
+          "chongtouheight": "8",
+          "chongtouradius": "10"
+        },
+        {
+          "Time": "2020-01-09",
+          "pbxheight": "22.3",
+          "pbxradius": "10",
+          "motaoheight": "30.3",
+          "motaoinradius": "10",
+          "motaooutradius": "15",
+          "chongtouheight": "8",
+          "chongtouradius": "10"
+        },
+        {
+          "Time": "2020-01-09",
+          "pbxheight": "22.3",
+          "pbxradius": "10",
+          "motaoheight": "30.3",
+          "motaoinradius": "10",
+          "motaooutradius": "15",
+          "chongtouheight": "8",
+          "chongtouradius": "10"
+        },
+        {
+          "Time": "2020-01-09",
+          "pbxheight": "22.3",
+          "pbxradius": "10",
+          "motaoheight": "30.3",
+          "motaoinradius": "10",
+          "motaooutradius": "15",
+          "chongtouheight": "8",
+          "chongtouradius": "10"
+        },
+        {
+          "Time": "2020-01-09",
+          "pbxheight": "22.3",
+          "pbxradius": "10",
+          "motaoheight": "30.3",
+          "motaoinradius": "10",
+          "motaooutradius": "15",
+          "chongtouheight": "8",
+          "chongtouradius": "10"
+        },
+        {
+          "Time": "2020-01-09",
+          "pbxheight": "22.3",
+          "pbxradius": "10",
+          "motaoheight": "30.3",
+          "motaoinradius": "10",
+          "motaooutradius": "15",
+          "chongtouheight": "8",
+          "chongtouradius": "10"
+        },
+        {
+          "Time": "2020-01-09",
+          "pbxheight": "22.3",
+          "pbxradius": "10",
+          "motaoheight": "30.3",
+          "motaoinradius": "10",
+          "motaooutradius": "15",
+          "chongtouheight": "8",
+          "chongtouradius": "10"
+        },
+        {
+          "Time": "2020-01-09",
+          "pbxheight": "22.3",
+          "pbxradius": "10",
+          "motaoheight": "30.3",
+          "motaoinradius": "10",
+          "motaooutradius": "15",
+          "chongtouheight": "8",
+          "chongtouradius": "10"
+        }
+      ]
+    }
+  },
+  "ok": true
+}
