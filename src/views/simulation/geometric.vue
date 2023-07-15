@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import type { FormInstance } from "element-plus";
+import { ElMessage } from "element-plus";
+import { constraintStore } from "@/store/modules/constraint";
 import { geoRules } from "./utils/rule";
+import { useGeoFormStore } from "@/store/modules/geometric";
 import bqtImage from "@/assets/img/BQT.png";
 import yztImage from "@/assets/img/YZT.png";
 import zhtImage from "@/assets/img/ZHT.png";
@@ -49,16 +53,76 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
-      console.log("submit!");
+      useGeoFormStore().saveForm(ruleForm);
+      ElMessage({
+        message: "保存成功，点击开始计算获取结果或到约束条件页面完善信息",
+        type: "success",
+        duration: 3000,
+        center: true
+      });
     } else {
       console.log("error submit!", fields);
     }
   });
 };
 
+onMounted(() => {
+  const storedGeoForm = useGeoFormStore().getFormData();
+  if (storedGeoForm) {
+    Object.assign(ruleForm, storedGeoForm);
+  }
+});
+
 const resetForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.resetFields();
+};
+
+const router = useRouter();
+
+const startCalculation = async () => {
+  const constraintData = constraintStore().getFormData();
+  const geoFormData = useGeoFormStore().getFormData();
+
+  const requestData = {
+    constraint: constraintData,
+    geoForm: geoFormData
+  };
+  console.log(JSON.stringify(requestData));
+  try {
+    // 替换后端真实接口
+    const response = await fetch("/api/calculate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(requestData)
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      // 假设后端返回的页面路径为 result.pageUrl
+      router.push(result.pageUrl);
+      constraintStore().resetFormData();
+      useGeoFormStore().resetFormData();
+    } else {
+      console.error("请求失败：", response.status);
+      ElMessage({
+        message: "请求失败，请稍后重试",
+        type: "error",
+        duration: 3000,
+        center: true
+      });
+    }
+  } catch (error) {
+    console.error("请求错误：", error);
+    ElMessage({
+      message: "请求错误，请检查网络连接",
+      type: "error",
+      duration: 3000,
+      center: true
+    });
+  }
 };
 </script>
 
@@ -326,6 +390,11 @@ const resetForm = (formEl: FormInstance | undefined) => {
         <img :src="zhtImage" alt="锥合体" />
       </template>
     </div>
+    <el-button class="fixed-footer" type="primary" @click="startCalculation"
+      >开始计算</el-button
+    >
+
+    >
   </div>
 </template>
 
@@ -359,5 +428,14 @@ const resetForm = (formEl: FormInstance | undefined) => {
   justify-content: flex-end;
   margin-left: 20px;
   min-width: 200px;
+}
+
+.fixed-footer {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  font-size: 20px;
+  background-color: red;
 }
 </style>
