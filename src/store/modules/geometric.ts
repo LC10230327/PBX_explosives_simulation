@@ -19,31 +19,39 @@ interface RuleForm {
   mutaoheight2?: number;
 }
 
+const initialForm: RuleForm = {
+  shape: "YZT",
+  pbxheight: undefined,
+  pbxdia: undefined,
+  mutaoheight: undefined,
+  mndia: undefined,
+  mwdia: undefined,
+  upheigh: undefined,
+  updia: undefined,
+  downheight: undefined,
+  downdia: undefined,
+  pbxupdia: undefined,
+  pbxdowndia: undefined,
+  pbxheight1: undefined,
+  pbxheight2: undefined,
+  mutaoheight1: undefined,
+  mutaoheight2: undefined
+};
+
 export const useGeoFormStore = defineStore({
-  id: "form",
+  id: "geoform",
   state: (): { form: RuleForm } => ({
-    form: {
-      shape: "YZT",
-      pbxheight: undefined,
-      pbxdia: undefined,
-      mutaoheight: undefined,
-      mndia: undefined,
-      mwdia: undefined,
-      upheigh: undefined,
-      updia: undefined,
-      downheight: undefined,
-      downdia: undefined,
-      pbxupdia: undefined,
-      pbxdowndia: undefined,
-      pbxheight1: undefined,
-      pbxheight2: undefined,
-      mutaoheight1: undefined,
-      mutaoheight2: undefined
-    }
+    form: { ...initialForm }
   }),
   actions: {
     saveForm(form: RuleForm) {
       this.form = form;
+    },
+    getFormData() {
+      return this.form;
+    },
+    resetFormData() {
+      this.form = { ...initialForm };
     }
   }
 });
