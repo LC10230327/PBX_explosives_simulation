@@ -1,15 +1,15 @@
 import { defineStore } from "pinia";
 
 interface SimulationData {
-  yaotem: string;
-  chongtem: string;
-  mutem: string;
-  pressure1: string;
-  time1: string;
-  pressure2: string;
-  time2: string;
-  pressure3: string;
-  time3: string;
+  yaotem?: string;
+  chongtem?: string;
+  mutem?: string;
+  pressure1?: string;
+  time1?: string;
+  pressure2?: string;
+  time2?: string;
+  pressure3?: string;
+  time3?: string;
 }
 
 const initialSimulationData: SimulationData = {
