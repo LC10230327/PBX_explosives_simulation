@@ -2,6 +2,7 @@
 import { reactive, ref } from "vue";
 import type { FormInstance } from "element-plus";
 import { geoRules } from "./utils/rule";
+import { useGeoFormStore } from "@/store/modules/geometric";
 import bqtImage from "@/assets/img/BQT.png";
 import yztImage from "@/assets/img/YZT.png";
 import zhtImage from "@/assets/img/ZHT.png";
@@ -49,7 +50,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
-      console.log("submit!");
+      useGeoFormStore().saveForm(ruleForm);
     } else {
       console.log("error submit!", fields);
     }
